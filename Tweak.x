@@ -1,4 +1,5 @@
 #define CHECK_TARGET
+#import <HBLog.h>
 #import <PSHeader/PS.h>
 #import <substrate.h>
 // #import <os/lock.h>
@@ -36,8 +37,8 @@ void (*realizeClassMaybeSwiftMaybeRelock)(Class, bool);
     realizeClassMaybeSwiftMaybeRelock = (void (*)(Class, bool))MSFindSymbol(image, "__ZL33realizeClassMaybeSwiftMaybeRelockP10objc_classR8mutex_ttILb0EEb");
     realizeClassWithoutSwift = (Class (*)(Class, Class))MSFindSymbol(image, "__ZL24realizeClassWithoutSwiftP10objc_classS0_");
     // runtimeLock = (os_unfair_lock *)MSFindSymbol(image, "_runtimeLock");
-    NSLog(@"[+] Found realizeClassMaybeSwiftMaybeRelock: %d", realizeClassMaybeSwiftMaybeRelock != NULL);
-    NSLog(@"[+] Found realizeClassWithoutSwift: %d", realizeClassWithoutSwift != NULL);
-    // NSLog(@"[+] Found runtimeLock: %d", runtimeLock != NULL);
+    HBLogDebug(@"[+] Found realizeClassMaybeSwiftMaybeRelock: %d", realizeClassMaybeSwiftMaybeRelock != NULL);
+    HBLogDebug(@"[+] Found realizeClassWithoutSwift: %d", realizeClassWithoutSwift != NULL);
+    // HBLogDebug(@"[+] Found runtimeLock: %d", runtimeLock != NULL);
     %init;
 }
