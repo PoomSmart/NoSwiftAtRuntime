@@ -1,6 +1,6 @@
 Package: com.ps.noswiftatruntime
 Name: NoSwiftAtRuntime
-Version: 1.0.1
+Version: 1.0.2
 Architecture: iphoneos-arm
 Description: Avoids crashing when inspecting runtime on apps with incompatible Swift classes on iOS <= 16.
 Maintainer: PoomSmart

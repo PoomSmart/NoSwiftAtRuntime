@@ -10,7 +10,7 @@
 #define key CFSTR("NoSwiftAtRuntime")
 
 static BOOL shouldEnableForBundleIdentifier(NSString *bundleIdentifier) {
-    if ([bundleIdentifier isEqualToString:@"com.apple.springboard"])
+    if (!bundleIdentifier || [bundleIdentifier isEqualToString:@"com.apple.springboard"])
         return NO;
     const void *value = CFPreferencesCopyAppValue(key, domain);
     if (value == NULL)
