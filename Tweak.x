@@ -21,7 +21,7 @@ static BOOL shouldEnableForBundleIdentifier(NSString *bundleIdentifier) {
 
 // os_unfair_lock *runtimeLock;
 Class (*realizeClassWithoutSwift)(Class, Class);
-void (*realizeClassMaybeSwiftMaybeRelock)(Class, bool);
+Class (*realizeClassMaybeSwiftMaybeRelock)(Class, bool);
 
 %hookf(Class, realizeClassMaybeSwiftMaybeRelock, Class cls, bool leaveLocked) {
     if (leaveLocked) {
@@ -34,7 +34,7 @@ void (*realizeClassMaybeSwiftMaybeRelock)(Class, bool);
 %ctor {
     if (!isTarget(TargetTypeApps) || !shouldEnableForBundleIdentifier(NSBundle.mainBundle.bundleIdentifier)) return;
     MSImageRef image = MSGetImageByName(realPath2(@"/usr/lib/libobjc.A.dylib"));
-    realizeClassMaybeSwiftMaybeRelock = (void (*)(Class, bool))MSFindSymbol(image, "__ZL33realizeClassMaybeSwiftMaybeRelockP10objc_classR8mutex_ttILb0EEb");
+    realizeClassMaybeSwiftMaybeRelock = (Class (*)(Class, bool))MSFindSymbol(image, "__ZL33realizeClassMaybeSwiftMaybeRelockP10objc_classR8mutex_ttILb0EEb");
     realizeClassWithoutSwift = (Class (*)(Class, Class))MSFindSymbol(image, "__ZL24realizeClassWithoutSwiftP10objc_classS0_");
     // runtimeLock = (os_unfair_lock *)MSFindSymbol(image, "_runtimeLock");
     HBLogDebug(@"[+] Found realizeClassMaybeSwiftMaybeRelock: %d", realizeClassMaybeSwiftMaybeRelock != NULL);
